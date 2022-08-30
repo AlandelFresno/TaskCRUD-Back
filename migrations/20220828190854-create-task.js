@@ -15,7 +15,7 @@ module.exports = {
       done: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
-        defaultValue: false
+        defaultValue: 0
       },
       description: {
         type: Sequelize.TEXT,
