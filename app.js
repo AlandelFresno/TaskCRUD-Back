@@ -19,6 +19,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', require('./routes/api/index'));
+app.get('/', (req, res) => {
+  res.status(200).json({ msg: 'Server is running' });
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
