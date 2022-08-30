@@ -18,7 +18,7 @@ describe('Test /api/auth/login', () => {
     const response = await api.post('/api/auth/login').send();
     expect(response.statusCode).toBe(400);
   });
-  test('should ', async () => {
+  test('should log in successfully', async () => {
     const response = await api
       .post('/api/auth/login')
       .send({ email: 'example@example.com', password: '123123' });
@@ -29,5 +29,21 @@ describe('Test /api/auth/login', () => {
       name: 'demoUser',
       email: 'example@example.com',
     });
+  });
+  test('should validate the password field and deny it', async () => {
+    const response = await api
+      .post('/api/auth/login')
+      .send({ email: 'example@example.com', password: '1234' });
+    expect(response.statusCode).toBe(400);
+    expect(response.text).toBe(
+      '{"err":[{"value":"1234","msg":"Password must be at least 5 characters long","param":"password","location":"body"}]}'
+    );
+  });
+  test('should validate the password field and deny it', async () => {
+    const response = await api
+      .post('/api/auth/login')
+      .send({ email: 'example@example.com', password: '123456' });
+    expect(response.statusCode).toBe(401);
+    expect(response.text).toBe('{"msg":"Invalid credentials"}');
   });
 });
